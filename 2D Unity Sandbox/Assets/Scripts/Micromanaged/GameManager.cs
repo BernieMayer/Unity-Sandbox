@@ -18,10 +18,12 @@ public class GameManager : MonoBehaviour
         EnemyChase.PlayerLoseCoin -= LoseCoin;
     }
 
-    void AddScore()
+    void AddScore(CoinPickup.CoinCollectedData data)
     {
-        score++;
-        UpdateScoreText();
+        if (data.collectedByTag == "Player") {
+            score++;
+            UpdateScoreText();
+        }   
     }
 
     void LoseCoin()

@@ -25,12 +25,16 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement * moveSpeed * Time.deltaTime);
     }
 
-    void IncreaseSpeed()
+    void IncreaseSpeed(CoinPickup.CoinCollectedData data)
     {
-        moveSpeed += 0.1f;
-        if (moveSpeed > maxSpeed)
+        if (data.collectedByTag == "Player") 
         {
-            moveSpeed = maxSpeed;
+            moveSpeed += 0.1f;
+            if (moveSpeed > maxSpeed)
+            {
+                moveSpeed = maxSpeed;
+            }
         }
+    
     }
 }

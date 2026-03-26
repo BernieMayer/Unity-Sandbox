@@ -8,6 +8,15 @@ public class EnemyChase : MonoBehaviour
     public delegate void OnPlayerLoseCoin();
     public static event OnPlayerLoseCoin PlayerLoseCoin;
 
+    private void OnEnable()
+    {
+        CoinPickup.CoinCollected += IncreaseSize;
+    }
+    private void OnDisable()
+    {
+        CoinPickup.CoinCollected -= IncreaseSize;
+    }
+
     void Update()
     {
         if (player != null)
@@ -17,6 +26,15 @@ public class EnemyChase : MonoBehaviour
                 player.position,
                 speed * Time.deltaTime
             );
+        }
+    }
+
+
+    void IncreaseSize(CoinPickup.CoinCollectedData data) 
+    {
+        if (data.collectedByTag == "Enemy"))
+        {
+            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
         }
     }
 
