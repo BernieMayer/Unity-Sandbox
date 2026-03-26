@@ -9,16 +9,24 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         CoinPickup.CoinCollected += AddScore;
+        EnemyChase.PlayerLoseCoin += LoseCoin;
     }
 
     private void OnDisable()
     {
         CoinPickup.CoinCollected -= AddScore;
+        EnemyChase.PlayerLoseCoin -= LoseCoin;
     }
 
     void AddScore()
     {
         score++;
+        UpdateScoreText();
+    }
+
+    void LoseCoin()
+    {
+        score--;
         UpdateScoreText();
     }
 
