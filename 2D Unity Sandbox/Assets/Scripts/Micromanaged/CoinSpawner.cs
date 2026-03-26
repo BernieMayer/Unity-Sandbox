@@ -6,6 +6,8 @@ public class CoinSpawner : MonoBehaviour
     public float spawnInterval = 2f;
     public float spawnRangeX = 8f;
     public float spawnRangeY = 4f;
+    public float spawnClearRadius = 0.5f;
+    public int maxSpawnAttempts = 10;
 
     void Start()
     {
@@ -14,10 +16,31 @@ public class CoinSpawner : MonoBehaviour
 
     void SpawnCoin()
     {
-        float randomX = Random.Range(-spawnRangeX, spawnRangeX);
-        float randomY = Random.Range(-spawnRangeY, spawnRangeY);
+        for (int attempt = 0; attempt < maxSpawnAttempts; attempt++)
+        {
+            float randomX = Random.Range(-spawnRangeX, spawnRangeX);
+            float randomY = Random.Range(-spawnRangeY, spawnRangeY);
+            Vector2 spawnPosition = new Vector2(randomX, randomY);
 
-        Vector2 spawnPosition = new Vector2(randomX, randomY);
-        Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+            if (!IntersectsPlayerOrEnemy(spawnPosition))
+            {
+                Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+                return;
+            }
+        }
+    }
+
+    bool IntersectsPlayerOrEnemy(Vector2 position)
+    {
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(position, spawnClearRadius);
+        foreach (Collider2D overlap in overlaps)
+        {
+            if (overlap.CompareTag("Player") || overlap.CompareTag("Enemy"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

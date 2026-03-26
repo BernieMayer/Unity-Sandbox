@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnemyChase : MonoBehaviour
 {
     public Transform player;
-    public CircleCollider2D circleCollider;
     public float speed = 2f;
 
     public delegate void OnPlayerLoseCoin();
@@ -16,11 +15,6 @@ public class EnemyChase : MonoBehaviour
     private void OnDisable()
     {
         CoinPickup.CoinCollected -= IncreaseSize;
-    }
-
-    void Start()
-    {
-        circleCollider = GetComponent<CircleCollider2D>();
     }
 
     void Update()
@@ -40,8 +34,7 @@ public class EnemyChase : MonoBehaviour
     {
         if (data.collectedByTag == "Enemy")
         {
-            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
-            circleCollider.radius = circleCollider.radius * 1.1f;
+            transform.localScale += new Vector3(0.05f, 0.05f, 0f);
         }
     }
 
