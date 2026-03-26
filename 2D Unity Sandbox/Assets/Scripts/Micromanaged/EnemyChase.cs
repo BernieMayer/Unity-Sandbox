@@ -25,7 +25,6 @@ public class EnemyChase : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-          // Invoke a method to make the player lose a coin
           PlayerLoseCoin?.Invoke();
         }
     }
