@@ -3,6 +3,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float minSpeed = 5f;
+    public float maxSpeed = 10f;
+
+    private void OnEnable()
+    {
+        CoinPickup.CoinCollected += IncreaseSpeed;
+    }
+
+    private void OnDisable()
+    {
+        CoinPickup.CoinCollected -= IncreaseSpeed;
+    }
 
     void Update()
     {
@@ -11,5 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movement = new Vector2(moveX, moveY).normalized;
         transform.Translate(movement * moveSpeed * Time.deltaTime);
+    }
+
+    void IncreaseSpeed()
+    {
+        moveSpeed += 0.1f;
+        if (moveSpeed > maxSpeed)
+        {
+            moveSpeed = maxSpeed;
+        }
     }
 }
